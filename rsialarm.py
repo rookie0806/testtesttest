@@ -72,7 +72,7 @@ while True:
             rsi_last = rsi(df, 14).iloc[-2]
             price = df["trade_price"].iloc[-1]
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=55 and rsi_last<55):
+                if(rsi_now>=35 and rsi_last<35):
                     if(repeat[i]==1):
                         now_buy = 50000/price
                     else:
