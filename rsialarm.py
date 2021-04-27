@@ -45,6 +45,7 @@ for i in range(0,len(symbols)):
     repeat.append(1)
     pyungdan.append(0)
     rsi_lasts.append(0)
+print("실행중")
 while True:
     for i in range(0,len(symbols)):
         try:
