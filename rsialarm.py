@@ -45,7 +45,7 @@ for i in range(0,len(symbols)):
     repeat.append(1)
     pyungdan.append(0)
     rsi_lasts.append(0)
-print("실행중")
+print("working")
 while True:
     for i in range(0,len(symbols)):
         try:
@@ -72,7 +72,7 @@ while True:
             rsi_last = rsi(df, 14).iloc[-2]
             price = df["trade_price"].iloc[-1]
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=33 and rsi_last<33):
+                if(rsi_now>=53 and rsi_last<53):
                     if(repeat[i]==1):
                         now_buy = 100000/price
                     else:
