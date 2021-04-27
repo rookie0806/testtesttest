@@ -88,5 +88,6 @@ while True:
                     buycoin[i] = 0
                     repeat[i] = 1
                 rsi_lasts[i] = rsi_last
-        except:
+        except Exception as e:
+            print(e)
             time.sleep(1)
