@@ -72,18 +72,18 @@ while True:
             rsi_last = rsi(df, 14).iloc[-2]
             price = df["trade_price"].iloc[-1]
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=35 and rsi_last<35):
+                if(rsi_now>=55 and rsi_last<55):
                     if(repeat[i]==1):
-                        now_buy = 100000/price
+                        now_buy = 50000/price
                     else:
-                        now_buy = 100000/price * (1 + 30*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
+                        now_buy = 50000/price * (1 + 30*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
                     number[i] = number[i] + now_buy
                     buycoin[i] = buycoin[i] + price  * now_buy
                     pyungdan[i] = buycoin[i]/number[i]
-                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 구매("+str(repeat[i])+") 신호 "+str(price * now_buy)+"원")
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 구매("+str(repeat[i])+") 신호 "+str(price )+"원, 총 구매 :"+str(price* now_buy))
                     repeat[i] = repeat[i] + 1
                 if(rsi_now>=65 and number[i]!=0):
-                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 신호(65)")
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 신호(65) "+str(price)+"원")
                     number[i] = 0
                     buycoin[i] = 0
                     repeat[i] = 1
