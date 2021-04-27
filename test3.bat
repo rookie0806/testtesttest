@@ -1,0 +1,5 @@
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py IOST 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py ELF 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py CHZ 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py XEM 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py HUNT 60 1.5"

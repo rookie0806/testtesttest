@@ -1,0 +1,5 @@
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py SC 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py TSHP 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py OBSR 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py MVL 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py QKC 60 1.5"

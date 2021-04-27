@@ -1,0 +1,5 @@
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py AERGO 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py ARDR 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py AERGO 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py EMC2 60 1.5"
+start cmd /k "cd C:\Users\devgu\Desktop\auto && python test.py POLY 60 1.5"
