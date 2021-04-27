@@ -49,7 +49,7 @@ print("working")
 while True:
     for i in range(0,len(symbols)):
         try:
-            time.sleep(0.5)
+            time.sleep(0.8)
             url = "https://api.upbit.com/v1/candles/minutes/5"
             querystring = {"market":"KRW-"+symbols[i],"count":"500"}
             response = requests.request("GET", url, params=querystring)
@@ -72,7 +72,7 @@ while True:
             rsi_last = rsi(df, 14).iloc[-2]
             price = df["trade_price"].iloc[-1]
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=53 and rsi_last<53):
+                if(rsi_now>=35 and rsi_last<35):
                     if(repeat[i]==1):
                         now_buy = 100000/price
                     else:
