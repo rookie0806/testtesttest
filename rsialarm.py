@@ -47,42 +47,45 @@ for i in range(0,len(symbols)):
     rsi_lasts.append(0)
 while True:
     for i in range(0,len(symbols)):
-        time.sleep(0.5)
-        url = "https://api.upbit.com/v1/candles/minutes/5"
-        querystring = {"market":"KRW-"+symbols[i],"count":"500"}
-        response = requests.request("GET", url, params=querystring)
-        data = response.json()
-        df = pd.DataFrame(data)
-        df=df.reindex(index=df.index[::-1]).reset_index()
-        df['close']=df["trade_price"]
-        def rsi(ohlc: pd.DataFrame, period: int = 14):
-            ohlc["close"] = ohlc["close"]
-            delta = ohlc["close"].diff()
-            up, down = delta.copy(), delta.copy()
-            up[up < 0] = 0
-            down[down > 0] = 0
-            _gain = up.ewm(com=(period - 1), min_periods=period).mean()
-            _loss = down.abs().ewm(com=(period - 1), min_periods=period).mean()
-            RS = _gain / _loss
-            return pd.Series(100 - (100 / (1 + RS)), name="RSI")
+        try:
+            time.sleep(0.5)
+            url = "https://api.upbit.com/v1/candles/minutes/5"
+            querystring = {"market":"KRW-"+symbols[i],"count":"500"}
+            response = requests.request("GET", url, params=querystring)
+            data = response.json()
+            df = pd.DataFrame(data)
+            df=df.reindex(index=df.index[::-1]).reset_index()
+            df['close']=df["trade_price"]
+            def rsi(ohlc: pd.DataFrame, period: int = 14):
+                ohlc["close"] = ohlc["close"]
+                delta = ohlc["close"].diff()
+                up, down = delta.copy(), delta.copy()
+                up[up < 0] = 0
+                down[down > 0] = 0
+                _gain = up.ewm(com=(period - 1), min_periods=period).mean()
+                _loss = down.abs().ewm(com=(period - 1), min_periods=period).mean()
+                RS = _gain / _loss
+                return pd.Series(100 - (100 / (1 + RS)), name="RSI")
 
-        rsi_now = rsi(df, 14).iloc[-1]
-        rsi_last = rsi(df, 14).iloc[-2]
-        price = df["trade_price"].iloc[-1]
-        if(rsi_lasts[i]!=rsi_last):
-            if(rsi_now>=33 and rsi_last<33):
-                if(repeat[i]==1):
-                    now_buy = 100000/price
-                else:
-                    now_buy = 100000/price * (1 + 30*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
-                number[i] = number[i] + now_buy
-                buycoin[i] = buycoin[i] + price  * now_buy
-                pyungdan[i] = buycoin[i]/number[i]
-                bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 구매("+str(repeat[i])+") 신호 "+str(price * now_buy)+"원")
-                repeat[i] = repeat[i] + 1
-            if(rsi_now>=65 and number[i]!=0):
-                bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 신호(65)")
-                number[i] = 0
-                buycoin[i] = 0
-                repeat[i] = 1
-            rsi_lasts[i] = rsi_last
+            rsi_now = rsi(df, 14).iloc[-1]
+            rsi_last = rsi(df, 14).iloc[-2]
+            price = df["trade_price"].iloc[-1]
+            if(rsi_lasts[i]!=rsi_last):
+                if(rsi_now>=33 and rsi_last<33):
+                    if(repeat[i]==1):
+                        now_buy = 100000/price
+                    else:
+                        now_buy = 100000/price * (1 + 30*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
+                    number[i] = number[i] + now_buy
+                    buycoin[i] = buycoin[i] + price  * now_buy
+                    pyungdan[i] = buycoin[i]/number[i]
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 구매("+str(repeat[i])+") 신호 "+str(price * now_buy)+"원")
+                    repeat[i] = repeat[i] + 1
+                if(rsi_now>=65 and number[i]!=0):
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 신호(65)")
+                    number[i] = 0
+                    buycoin[i] = 0
+                    repeat[i] = 1
+                rsi_lasts[i] = rsi_last
+        except:
+            time.sleep(1)
