@@ -47,13 +47,13 @@ def get_my_value(coin):
     return balance,avg_buy_price
 
 
-def buy(coin,volume,price):
+def buy(coin,price,volume):
     query = {
     'market': 'KRW-'+coin,
     'side': 'bid',
     'price': price,
-    'volume': '',
-    'ord_type': 'price',
+    'volume': volume,
+    'ord_type': 'limit',
     }
     query_string = urlencode(query).encode()
 
@@ -75,11 +75,40 @@ def buy(coin,volume,price):
     res = requests.post(server_url + "/v1/orders", params=query, headers=headers)
     
     if(res.status_code==201):
-        print("매수 주문 완료")
-        print("주문 수량 : "+str(volume))
-        print("주문 가격 : "+str(price))
+        return True
     else:
-        print("매수 주문 실패")
-        print(res.text)
+        return False
 
-buy("XRP",10000,10000)
+def sell(coin,price,volume):
+    query = {
+    'market': 'KRW-'+coin,
+    'side': 'ask',
+    'price': price,
+    'volume': volume,
+    'ord_type': 'limit',
+    }
+    query_string = urlencode(query).encode()
+
+    m = hashlib.sha512()
+    m.update(query_string)
+    query_hash = m.hexdigest()
+
+    payload = {
+        'access_key': access_key,
+        'nonce': str(uuid.uuid4()),
+        'query_hash': query_hash,
+        'query_hash_alg': 'SHA512',
+    }
+
+    jwt_token = jwt.encode(payload, secret_key)
+    authorize_token = 'Bearer {}'.format(jwt_token)
+    headers = {"Authorization": authorize_token}
+
+    res = requests.post(server_url + "/v1/orders", params=query, headers=headers)
+    if(res.status_code==201):
+        #return float(res.json()["price"])
+        return 1
+    else:
+        return 0
+
+buy("XRP",1545,10000/1545)
