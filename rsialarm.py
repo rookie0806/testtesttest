@@ -188,19 +188,7 @@ while True:
                     buy(symbols[i],price,now_buy)
                     repeat[i] = repeat[i] + 1
                 mybal,my_avg_price = get_my_value(symbols[i])
-                if(rsi_now>=70 and number[i]!=0):
-                    '''
-                    if(price<=100):
-                        price = price+0.1
-                    elif(price<=1000):
-                        price = price+1
-                    elif(price<=10000):
-                        price = price+5
-                    elif(price<=100000):
-                        price = price+10
-                    elif(price<=1000000):
-                        price = price+50
-                    '''
+                if(rsi_now>=70 and mybal!=0.0):
                     bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
                     sellbuy(symbols[i],price,now_buy)
                     number[i] = 0
@@ -208,20 +196,8 @@ while True:
                     repeat[i] = 1
                     
                 if(rsi_last>=57 and rsi_now<=rsi_last2  and mybal!=0.0):
-                    '''
-                    if(price<=100):
-                        price = price+0.1
-                    elif(price<=1000):
-                        price = price+1
-                    elif(price<=10000):
-                        price = price+5
-                    elif(price<=100000):
-                        price = price+10
-                    elif(price<=1000000):
-                        price = price+50
-                    '''
                     bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
-                    sell(symbols[i],mybal,mybal)
+                    sell(symbols[i],price,mybal)
                     number[i] = 0
                     buycoin[i] = 0
                     repeat[i] = 1
