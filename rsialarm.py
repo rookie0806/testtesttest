@@ -167,7 +167,7 @@ while True:
                     if(repeat[i]==1):
                         now_buy = 30000/price
                     else:
-                        now_buy = 30000/price * (1 + 30*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
+                        now_buy = 30000/price * (1 + 40*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
                     number[i] = number[i] + now_buy
                     buycoin[i] = buycoin[i] + price  * now_buy
                     pyungdan[i] = buycoin[i]/number[i]
