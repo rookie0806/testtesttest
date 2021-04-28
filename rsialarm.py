@@ -140,7 +140,7 @@ while True:
     for i in range(0,len(symbols)):
         try:
             time.sleep(0.5)
-            url = "https://api.upbit.com/v1/candles/minutes/1"
+            url = "https://api.upbit.com/v1/candles/minutes/5"
             querystring = {"market":"KRW-"+symbols[i],"count":"500"}
             response = requests.request("GET", url, params=querystring)
             data = response.json()
@@ -178,9 +178,9 @@ while True:
                         price = price-50
                     ''' 
                     if(repeat[i]==1):
-                        now_buy = 15000/price
+                        now_buy = 20000/price
                     else:
-                        now_buy = 15000/price * (1 + 50*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
+                        now_buy = 20000/price * (1 + 60*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
                     number[i] = number[i] + now_buy
                     buycoin[i] = buycoin[i] + price  * now_buy
                     pyungdan[i] = buycoin[i]/number[i]
@@ -196,6 +196,16 @@ while True:
                     repeat[i] = 1
                     
                 if(rsi_last>=57 and rsi_now<=rsi_last2  and mybal!=0.0):
+                    if(price<=100):
+                        price = price-0.1
+                    elif(price<=1000):
+                        price = price-1
+                    elif(price<=10000):
+                        price = price-5
+                    elif(price<=100000):
+                        price = price-10
+                    elif(price<=1000000):
+                        price = price-50
                     bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
                     sell(symbols[i],price,mybal)
                     number[i] = 0
