@@ -222,12 +222,12 @@ while True:
                         price = price+50
                     '''
                     bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
-                    number[i] = 0
-                    buycoin[i] = 0
-                    repeat[i] = 1
                     mybal,my_avg_price = get_my_value(symbols[i])
                     if(mybal!=0.0):
                         sell(symbols[i],mybal,mybal)
+                    number[i] = 0
+                    buycoin[i] = 0
+                    repeat[i] = 1
                 rsi_lasts[i] = rsi_last
         except Exception as e:
             print(e)
