@@ -33,7 +33,7 @@ server_url = 'https://api.upbit.com'
 telegram_token = '1787639638:AAEN5XFWnceuxvs7qWQxMkQGdxHgzdisHb4'
 bot = telegram.Bot(token = telegram_token)
 
-symbols = ["XRP","DAWN","DOGE","STRK","VET","HIVE","ETC","SRM","WAVES","MED","BTG","CHZ","NEO","QTUM","EOS","SC","CBK","PUNDIX","MARO","GAS","ZIL","MLK","SBD","PXL","AXS","OBSR","XEM","TRX","MVL","MOC","FLOW","DKA","ARK","MTL","TON","META","STX","SNT","MBL","XLM","TSHP"]#,"PLA","EMC2","STRAX","ADA","STMX","KMD","ORBS","PCI","CRE","IOST"] #,"SXP","MANA","STEEM","STPT","SSX","LINK","QTCON","DMT","RFR","ONT","CRO","BORA","LTC","MFT","LAMB","GRS","EDR","FCT2","AERGO","BCHA","AQT","DOT","BSV","UPP","TT"]#,"KNC","IQ","HUM","POWR","QKC","TFUEL","STORJ","HUNT","ICX","AHT","ARDR","JST","ZRX","WAXP","LSK","ONG","XTZ","KAVA","THETA","ANKR","HBAR","ENJ","OMG","REP","SAND","LBC","POLY","IGNIS","SOLVE","LOOM","CVC","GLM","ELF","ATOM","BAT","ADX","IOTA"]
+symbols = ["XRP","DAWN","AERGO","DOGE","STRK","VET","HIVE","ETC","SRM","WAVES","MED","BTG","CHZ","NEO","QTUM","EOS","SC","CBK","PUNDIX","MARO","GAS","ZIL","MLK","SBD","PXL","AXS","ONT","OBSR","XEM","TRX","MVL","MOC","FLOW","DKA","ARK","MTL","TON","META","STX","SNT","MBL","XLM","TSHP","PLA","EMC2","STRAX","ADA","STMX","KMD","ORBS","PCI","CRE","IOST","SXP","DOT"] #,"MANA","STEEM","STPT","SSX","LINK","QTCON","DMT","RFR","CRO","BORA","LTC","MFT","LAMB","GRS","EDR","FCT2","AERGO","BCHA","AQT","BSV","UPP","TT"]#,"KNC","IQ","HUM","POWR","QKC","TFUEL","STORJ","HUNT","ICX","AHT","ARDR","JST","ZRX","WAXP","LSK","ONG","XTZ","KAVA","THETA","ANKR","HBAR","ENJ","OMG","REP","SAND","LBC","POLY","IGNIS","SOLVE","LOOM","CVC","GLM","ELF","ATOM","BAT","ADX","IOTA"]
 buycoin = []
 number = []
 repeat = []
@@ -140,7 +140,7 @@ while True:
     for i in range(0,len(symbols)):
         try:
             time.sleep(0.5)
-            url = "https://api.upbit.com/v1/candles/minutes/3"
+            url = "https://api.upbit.com/v1/candles/minutes/5"
             querystring = {"market":"KRW-"+symbols[i],"count":"500"}
             response = requests.request("GET", url, params=querystring)
             data = response.json()
