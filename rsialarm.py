@@ -33,13 +33,13 @@ server_url = 'https://api.upbit.com'
 telegram_token = '1787639638:AAEN5XFWnceuxvs7qWQxMkQGdxHgzdisHb4'
 bot = telegram.Bot(token = telegram_token)
 
-symbols = ["XRP","DAWN","DOGE","STRK","VET","HIVE","ETC","SRM","WAVES","MED","BTG","CHZ","NEO","QTUM","EOS","SC","CBK","PUNDIX","MARO","GAS","ZIL","MLK","SBD","PXL","AXS","OBSR","XEM","TRX","MVL","MOC","FLOW","DKA","ARK","MTL","TON","META","STX","SNT","MBL","XLM","TSHP","PLA","EMC2","STRAX","ADA","STMX","KMD","ORBS","PCI","CRE","IOST","SXP","MANA","STEEM","STPT","SSX","LINK","QTCON","DMT","RFR","ONT","CRO","BORA","LTC","MFT","LAMB","GRS","EDR","FCT2","AERGO","BCHA","AQT","DOT","BSV","UPP","TT","KNC","IQ","HUM","POWR","QKC","TFUEL","STORJ","HUNT","ICX","AHT","ARDR","JST","ZRX","WAXP"]#,"LSK","ONG","XTZ","KAVA","THETA","ANKR","HBAR","ENJ","OMG","REP","SAND","LBC","POLY","IGNIS","SOLVE","LOOM","CVC","GLM","ELF","ATOM","BAT","ADX","IOTA"]
+symbols = ["XRP","DAWN","DOGE","STRK","VET","HIVE","ETC","SRM","WAVES","MED","BTG","CHZ","NEO","QTUM","EOS","SC","CBK","PUNDIX","MARO","GAS","ZIL","MLK","SBD","PXL","AXS","OBSR","XEM","TRX","MVL","MOC","FLOW","DKA","ARK","MTL","TON","META","STX","SNT","MBL","XLM","TSHP","PLA","EMC2","STRAX","ADA","STMX","KMD","ORBS","PCI","CRE","IOST","SXP","MANA","STEEM","STPT","SSX","LINK","QTCON","DMT","RFR","ONT","CRO","BORA","LTC","MFT","LAMB","GRS","EDR","FCT2","AERGO","BCHA","AQT","DOT","BSV","UPP","TT"]#,"KNC","IQ","HUM","POWR","QKC","TFUEL","STORJ","HUNT","ICX","AHT","ARDR","JST","ZRX","WAXP","LSK","ONG","XTZ","KAVA","THETA","ANKR","HBAR","ENJ","OMG","REP","SAND","LBC","POLY","IGNIS","SOLVE","LOOM","CVC","GLM","ELF","ATOM","BAT","ADX","IOTA"]
 buycoin = []
 number = []
 repeat = []
 pyungdan = []
 rsi_lasts = []
-
+money = 0
 def buy(coin,price,volume):
     query = {
     'market': 'KRW-'+coin,
@@ -140,7 +140,7 @@ while True:
     for i in range(0,len(symbols)):
         try:
             time.sleep(0.5)
-            url = "https://api.upbit.com/v1/candles/minutes/5"
+            url = "https://api.upbit.com/v1/candles/minutes/3"
             querystring = {"market":"KRW-"+symbols[i],"count":"500"}
             response = requests.request("GET", url, params=querystring)
             data = response.json()
@@ -164,7 +164,7 @@ while True:
             price = df["trade_price"].iloc[-1]
             
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=35 and rsi_now>=rsi_last2 and rsi_last<35):
+                if(rsi_now>=34 and rsi_now>=rsi_last2 and rsi_last<35):
                     '''
                     if(price<=100):
                         price = price-0.1
@@ -178,9 +178,9 @@ while True:
                         price = price-50
                     ''' 
                     if(repeat[i]==1):
-                        now_buy = 20000/price
+                        now_buy = 70000/price
                     else:
-                        now_buy = 20000/price * (1 + 60*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
+                        now_buy = 70000/price * (1 + 60*(pyungdan[i]-price)/(pyungdan[i]+price)/2)
                     number[i] = number[i] + now_buy
                     buycoin[i] = buycoin[i] + price  * now_buy
                     pyungdan[i] = buycoin[i]/number[i]
@@ -188,14 +188,16 @@ while True:
                     buy(symbols[i],price,now_buy)
                     repeat[i] = repeat[i] + 1
                 mybal,my_avg_price = get_my_value(symbols[i])
-                if(rsi_now>=70 and mybal!=0.0):
-                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
+                if(rsi_now>=75 and mybal!=0.0):
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+", 수익금 : "+str(mybal*(price-my_avg_price))+"원")
+                    money = money + mybal*(price-my_avg_price)
+                    bot.sendMessage(chat_id = '1780594186', text="누적 수익금 : "+str(money)+"원")
                     sellbuy(symbols[i],price,now_buy)
                     number[i] = 0
                     buycoin[i] = 0
                     repeat[i] = 1
                     
-                if(rsi_last>=57 and rsi_now<=rsi_last2  and mybal!=0.0):
+                if(rsi_last>=60 and rsi_now<=rsi_last2  and mybal!=0.0):
                     if(price<=100):
                         price = price-0.1
                     elif(price<=1000):
@@ -206,7 +208,9 @@ while True:
                         price = price-10
                     elif(price<=1000000):
                         price = price-50
-                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+"원")
+                    bot.sendMessage(chat_id = '1780594186', text="["+symbols[i]+"] 판매 "+str(my_avg_price)+"->"+str(price)+", 수익금 : "+str(mybal*(price-my_avg_price))+"원")
+                    money = money + mybal*(price-my_avg_price)
+                    bot.sendMessage(chat_id = '1780594186', text="누적 수익금 : "+str(money)+"원")
                     sell(symbols[i],price,mybal)
                     number[i] = 0
                     buycoin[i] = 0
