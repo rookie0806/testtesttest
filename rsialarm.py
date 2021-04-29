@@ -164,7 +164,7 @@ while True:
             price = df["trade_price"].iloc[-1]
             
             if(rsi_lasts[i]!=rsi_last):
-                if(rsi_now>=34 and rsi_now>=rsi_last2 and rsi_last<35):
+                if(rsi_now>=34 and rsi_now>=rsi_last2 and rsi_last<34):
                     '''
                     if(price<=100):
                         price = price-0.1
@@ -197,7 +197,7 @@ while True:
                     buycoin[i] = 0
                     repeat[i] = 1
                     
-                if(rsi_last>=60 and rsi_now<=rsi_last2  and mybal!=0.0):
+                if(rsi_last>=58 and rsi_now<=rsi_last2  and mybal!=0.0):
                     if(price<=100):
                         price = price-0.1
                     elif(price<=1000):
