@@ -166,7 +166,7 @@ while True:
             if(buyflag[j]):
                 if(df.iloc[0]["tradePrice"]>df.iloc[1]["highPrice"] and df.iloc[1]["tradePrice"]<=df.iloc[2]["tradePrice"] and df.iloc[0]["tradePrice"]>df.iloc[2]["highPrice"] ):
                     buyflag[j] = False
-                    buy(code[j],get_my_KRW/6,get_my_KRW/6)
+                    buy(code[j],get_my_KRW/3,get_my_KRW/3)
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 구매")
             if(mybal!=0.0):
                 if(df.iloc[1]["lowPrice"]>df.iloc[0]["tradePrice"]):
