@@ -140,12 +140,13 @@ def get_my_KRW():
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
     res = requests.get(server_url + "/v1/accounts", headers=headers)
-
     print(float(res.json()[0]["balance"]))
+    return float(res.json()[0]["balance"])
+    
 
 for j in range(0,len(code)):
     buyflag.append(True)
-    
+
 
 while True:
     try:
@@ -166,11 +167,14 @@ while True:
             if(buyflag[j]):
                 if(df.iloc[0]["tradePrice"]>df.iloc[1]["highPrice"] and df.iloc[1]["tradePrice"]<=df.iloc[2]["tradePrice"] and df.iloc[0]["tradePrice"]>df.iloc[2]["highPrice"] ):
                     buyflag[j] = False
-                    buy(code[j],get_my_KRW()/3,get_my_KRW()/3)
+                    print("buy")
+                    #buy(code[j],get_my_KRW()/3,get_my_KRW()/3)
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 구매")
             if(mybal!=0.0):
                 if(df.iloc[1]["lowPrice"]>df.iloc[0]["tradePrice"]):
-                    sell(code[j],mybal,mybal)
+                    
+                    #sell(code[j],mybal,mybal)
+                    print("sell")
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 판매")
                     buyflag[j] = True
             time.sleep(0.1)
