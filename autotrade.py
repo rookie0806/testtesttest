@@ -127,9 +127,25 @@ def get_my_value(coin):
     avg_buy_price = float(res.json()["ask_account"]["avg_buy_price"])
     return balance,avg_buy_price
 
+def get_my_KRW():
+    m = hashlib.sha512()
+
+
+    payload = {
+        'access_key': access_key,
+        'nonce': str(uuid.uuid4()),
+    }
+
+    jwt_token = jwt.encode(payload, secret_key)
+    authorize_token = 'Bearer {}'.format(jwt_token)
+    headers = {"Authorization": authorize_token}
+    res = requests.get(server_url + "/v1/accounts", headers=headers)
+
+    print(float(res.json()[0]["balance"]))
 
 for j in range(0,len(code)):
     buyflag.append(True)
+    
 
 while True:
     try:
@@ -150,7 +166,7 @@ while True:
             if(buyflag[j]):
                 if(df.iloc[0]["tradePrice"]>df.iloc[1]["highPrice"] and df.iloc[1]["tradePrice"]<=df.iloc[2]["tradePrice"] and df.iloc[0]["tradePrice"]>df.iloc[2]["highPrice"] ):
                     buyflag[j] = False
-                    buy(code[j],300000,300000)
+                    buy(code[j],get_my_KRW/6,get_my_KRW/6)
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 구매")
             if(mybal!=0.0):
                 if(df.iloc[1]["lowPrice"]>df.iloc[0]["tradePrice"]):
