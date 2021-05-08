@@ -153,7 +153,7 @@ def autotrading(MIN,COIN):
     df2=df.reindex(index=df.index[::-1]).reset_index()
     df['close']=df["tradePrice"]
     trade_price = float(df["tradePrice"][199])
-    money = 1000000
+    money = 3000000
     number = 0
     rate = 10
     price = 0
@@ -161,7 +161,7 @@ def autotrading(MIN,COIN):
     flag = 0
     sellprice = 0
     buycoin = 0
-    sonik = 1000000
+    sonik = 3000000
     buyflag = False
     highPrice = 0
     lastmsi = 100
@@ -169,12 +169,14 @@ def autotrading(MIN,COIN):
     repeat = 1
     for i, candle in enumerate(data):
         if(i>=101):
-            nowrsi =  rsi(df[:i+1].reset_index(), 14).iloc[-1]
-            if(nowrsi<=35):
+            rsi_now =  rsi(df[:i+1].reset_index(), 14).iloc[-1]
+            rsi_last1 =  rsi(df[:i+1].reset_index(), 14).iloc[-2]
+            rsi_last2 =  rsi(df[:i+1].reset_index(), 14).iloc[-3]
+            if(rsi_now>=36 and rsi_now>=rsi_last2 and rsi_last1<36):
                 if(repeat==1):
                     now_buy = 100000/data[399-i]["tradePrice"]
                 else:
-                    now_buy = 100000/data[399-i]["tradePrice"] * (1 + 30*(pyungdan-data[399-i]["tradePrice"])/(pyungdan+data[399-i]["tradePrice"])/2)
+                    now_buy = 100000/data[399-i]["tradePrice"] * (1 + 60*(pyungdan-data[399-i]["tradePrice"])/(pyungdan+data[399-i]["tradePrice"])/2)
                 number = number + now_buy
                 buycoin = buycoin + data[399-i]["tradePrice"]  * now_buy
                 sonik = sonik - data[399-i]["tradePrice"]  * now_buy
@@ -186,14 +188,13 @@ def autotrading(MIN,COIN):
                 print("평단 : ",buycoin/number)
                 
                 repeat = repeat + 1
-            if(nowrsi>=60 and number!=0):
+            if(rsi_now>=65 and rsi_now<=rsi_last2  and number!=0.0):
                 print(i,"번째 판매 가격 : ",data[399-i]["tradePrice"])
                 sonik = sonik + data[399-i]["tradePrice"] * number
                 print("남은 돈 : ", sonik)
                 number = 0
                 buycoin = 0
                 repeat = 1
-            lastmsi = nowrsi
         #print("-------------------------")
         '''
         openingPrice = df.iloc[i]["openingPrice"]

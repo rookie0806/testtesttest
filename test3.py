@@ -154,7 +154,7 @@ def start(COIN,MIN):
                money = float(df[0])
                flag = False
                time.sleep(3)
-               buy(COIN,50000,50000)
+               buy(COIN,50000,5 0000)
                time.sleep(60)
 
          if((test2+test3)/2>=test1):

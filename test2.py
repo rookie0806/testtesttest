@@ -202,7 +202,8 @@ def start(coin, time, rate):
                     "up" : up
                 })
         prices = pd.DataFrame(reversed(result))
-        #print(prices)
+
+        print(prices)
         yahoo = prices[['OpeningPrice', 'LowPrice', 'HighPrice', 'TradePrice','CandleAccTradeVolume','rsi','macd','exp','candleAccTradePrice']]
         predict = yahoo[:30]
         yahoo = yahoo[:-30]
@@ -262,12 +263,4 @@ def start(coin, time, rate):
 
 if __name__ == '__main__':
     flag = True
-    while True:
-        now = time.localtime()
-        if(now.tm_min%int(sys.argv[2])==int(sys.argv[2])-1 and now.tm_sec>=int(sys.argv[4]) and flag == True):
-            start(sys.argv[1], sys.argv[2],sys.argv[3])
-            flag = False
-        if(now.tm_min%int(sys.argv[2])!=int(sys.argv[2])-1):
-            flag = True
-        time.sleep(1)
-    
+    start(sys.argv[1], sys.argv[2],sys.argv[3])

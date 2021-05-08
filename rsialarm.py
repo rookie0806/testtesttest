@@ -40,6 +40,7 @@ repeat = []
 pyungdan = []
 rsi_lasts = []
 money = 0
+moneyhap = 0
 def buy(coin,price,volume):
     query = {
     'market': 'KRW-'+coin,
