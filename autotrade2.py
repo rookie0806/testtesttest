@@ -159,11 +159,11 @@ while True:
                 try:
                     if(ret["error"]):
                         if(buytmpflag == True):
-                            print(code[j] + "구매 완료")
+                            #print(code[j] + "구매 완료")
                             buyflag[j]==False
                             cancelcode[j] = ""
                         else:
-                            print(code[j] + "판매 완료")
+                            #print(code[j] + "판매 완료")
                             buyflag[j]==True
                             sonikmoney = (tmp - my_avg_price) * mybal
                             bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 손익 : "+ str(sonikmoney))
