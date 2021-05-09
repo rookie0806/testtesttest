@@ -30,7 +30,10 @@ import pandas
 access_key = 'qqbypzZxyAPhKoExBDfi0vQiN5YtlhRXxX7ow52X'
 secret_key = 'xDsjdKxzpqWPvFX1iFfl12QNhLym3Kfeb1x1ejYx'
 server_url = 'https://api.upbit.com'
-code = ["XRP","DAWN","DOGE","STRK","ETC","SRM","WAVES","BTG","NEO","QTUM","EOS","SC","CBK","PUNDIX","GAS","MLK","SBD","AXS","ONT","OBSR","MVL","FLOW","ARK","MTL","TON","STX","MBL","TSHP","STRAX","ADA","STMX","PCI","CRE","IOST","SXP","DOT","MANA","STEEM","STPT","LINK","QTCON","DMT","RFR","LTC","MFT","LAMB","GRS","EDR","AERGO","BCHA","AQT","BSV","TT","KNC","IQ","QKC","STORJ","ICX","AHT","ZRX","LSK","ONG","XTZ","KAVA","THETA","ENJ","OMG","REP","ATOM","BAT","ADX","IOTA"]
+#code = ["XRP","DAWN","DOGE","STRK","ETC","SRM","WAVES","BTG","NEO","QTUM","EOS","SC","CBK","PUNDIX","GAS","MLK","SBD","AXS","ONT","OBSR","MVL","FLOW","ARK","MTL","TON","STX","MBL","TSHP","STRAX","ADA","STMX","PCI","CRE","IOST","SXP","DOT","MANA","STEEM","STPT","LINK","QTCON","DMT","RFR","LTC","MFT","LAMB","GRS","EDR","AERGO","BCHA","AQT","BSV","TT","KNC","IQ","QKC","STORJ","ICX","AHT","ZRX","LSK","ONG","XTZ","KAVA","THETA","ENJ","OMG","REP","ATOM","BAT","ADX","IOTA"]
+#code = ["ETH","QTUM","BTC","XRP","EOS","BCH","BTT","ADA","LTC","KMD","EOS","SC","CBK","PUNDIX","GAS","MLK","SBD","AXS","ONT","OBSR","MVL","FLOW","ARK","MTL","TON","STX","MBL","TSHP","STRAX","ADA","STMX","PCI","CRE","IOST","SXP","DOT","MANA","STEEM","STPT","LINK","QTCON","DMT","RFR","LTC","MFT","LAMB","GRS","EDR","AERGO","BCHA","AQT","BSV","TT","KNC","IQ","QKC","STORJ","ICX","AHT","ZRX","LSK","ONG","XTZ","KAVA","THETA","ENJ","OMG","REP","ATOM","BAT","ADX","IOTA"]
+#code = ["BTT","MBL","AHT","TT","MFT","CRE","RFR","TSHP","IQ","MVL","OBSR","QKC","SC","STMX","EDR","IOST","QTCON","LAMB","STPT"]
+code = ["BTT","MBL","AHT","TT","MFT","CRE","RFR","TSHP","IQ","MVL","OBSR","QKC","SC","STMX","EDR","IOST","QTCON","LAMB","STPT"]
 buyflag = []
 telegram_token = '1787639638:AAEN5XFWnceuxvs7qWQxMkQGdxHgzdisHb4'
 bot = telegram.Bot(token = telegram_token)
@@ -153,7 +156,7 @@ while True:
         for j in range(0,len(code)):
             print(code[j])
             
-            url = "https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/60?code=CRIX.UPBIT.KRW-"+code[j]+"&count=400"
+            url = "https://crix-api-endpoint.upbit.com/v1/crix/candles/minutes/5?code=CRIX.UPBIT.KRW-"+code[j]+"&count=400"
 
             response = requests.request("GET", url)
 
@@ -165,19 +168,19 @@ while True:
             realsonik = 0
             mybal,my_avg_price = get_my_value(code[j])
             if(buyflag[j]):
-                if(df.iloc[0]["tradePrice"]>df.iloc[1]["highPrice"] and df.iloc[1]["tradePrice"]<=df.iloc[2]["tradePrice"] and df.iloc[0]["tradePrice"]>df.iloc[2]["highPrice"] ):
+                if(df.iloc[0]["tradePrice"]>df.iloc[1]["highPrice"] and df.iloc[1]["tradePrice"]<=df.iloc[2]["tradePrice"]):
                     buyflag[j] = False
                     print("buy")
-                    buy(code[j],get_my_KRW()/3,get_my_KRW()/3)
+                    buy(code[j],get_my_KRW()/2,get_my_KRW()/2)
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 구매")
-            if(mybal!=0.0):
-                if(df.iloc[1]["lowPrice"]>df.iloc[0]["tradePrice"]):
-                    
+            if(mybal!=0.0):100 103
+                if(my_avg_price*1.03<=df.iloc[0]["tradePrice"]):
                     sell(code[j],mybal,mybal)
                     print("sell")
                     bot.sendMessage(chat_id = '1780594186', text="["+code[j]+"] 판매")
                     buyflag[j] = True
             time.sleep(0.1)
     except Exception as e:
+            print("ddddd")
             print(e)
             time.sleep(0.2)
